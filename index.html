@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&subset=vietnamese&display=swap" rel="stylesheet" />
+<title>Chúc mừng 20/10 — CLB CTV</title>
+<style>
+  :root {
+    --bg1: #07041a;
+    --bg2: #1a0a3a;
+    --purple: #c084fc;
+    --pink: #f9a8d4;
+    --gold: #fde68a;
+    --lavender: #ddd6fe;
+    --glass: rgba(40, 20, 70, 0.55);
+    --script: "DVN Marion Script", "Dancing Script", "Segoe Script", cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 20%, #2a1050 0%, var(--bg2) 40%, var(--bg1) 100%);
+    font-family: "Segoe UI", "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    touch-action: manipulation;
+  }
+
+  #sky {
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,.7) 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 42%, rgba(255,255,255,.5) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 55% 12%, rgba(255,255,255,.65) 50%, transparent 51%),
+      radial-gradient(1px 1px at 72% 35%, rgba(255,255,255,.45) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 88% 22%, rgba(255,255,255,.6) 50%, transparent 51%),
+      radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,.35) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 65% 80%, rgba(255,255,255,.4) 50%, transparent 51%),
+      radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,.3) 50%, transparent 51%),
+      radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,.5) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 48% 28%, rgba(255,255,255,.55) 50%, transparent 51%);
+    pointer-events: none; z-index: 0;
+  }
+
+  #bokeh {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 1;
+    overflow: hidden;
+  }
+  .bokeh-dot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8px);
+    animation: bokehPulse var(--dur, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    will-change: transform, opacity;
+  }
+  @keyframes bokehPulse {
+    0%, 100% { opacity: 0.2; transform: scale(0.9); }
+    50% { opacity: 0.8; transform: scale(1.12); }
+  }
+
+  #ribbon {
+    position: fixed;
+    top: 8%; left: -10%;
+    width: 120%; height: 140px;
+    pointer-events: none; z-index: 2;
+    opacity: 0.55;
+  }
+  #ribbon svg { width: 100%; height: 100%; display: block; }
+
+  #fw {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  #names {
+    position: fixed; inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 4;
+  }
+  .falling-name {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    white-space: nowrap;
+    font-size: clamp(18px, 3.6vw, 22.5px); /* 1.5x */
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow:
+      0 0 4px rgba(255,255,255,0.85),
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 34px rgba(192,132,252,0.75),
+      0 0 50px rgba(249,168,212,0.5);
+    transform-origin: top center;
+    will-change: transform;
+    user-select: none;
+  }
+
+  #phase1 {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 6;
+    text-align: center;
+    padding: 24px;
+    pointer-events: none;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  #phase1.hide {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+  }
+  #phase1 .line1 {
+    font-size: clamp(18px, 4vw, 28px);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--lavender);
+    text-shadow: 0 0 6px rgba(255,255,255,0.8), 0 0 16px rgba(192,132,252,0.95), 0 0 34px rgba(192,132,252,0.7), 0 0 56px rgba(249,168,212,0.45);
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 0.3s;
+  }
+  #phase1 .big-date {
+    font-family: var(--script);
+    font-size: clamp(72px, 19vw, 160px);
+    font-weight: 700;
+    padding: 0 0.15em;
+    line-height: 1;
+    margin: 12px 0;
+    background: linear-gradient(180deg, #fff 0%, #f9a8d4 40%, #c084fc 70%, #fde68a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 30px rgba(249,168,212,0.7)) drop-shadow(0 0 60px rgba(192,132,252,0.5));
+    opacity: 0;
+    animation: fadeUp 1.4s ease forwards 0.8s, glowPulse 2.5s ease-in-out infinite 2.2s;
+  }
+  #phase1 .line3 {
+    font-size: clamp(16px, 3.5vw, 26px);
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    color: #fff;
+    text-shadow: 0 0 6px rgba(255,255,255,0.8), 0 0 16px rgba(253,230,138,0.95), 0 0 34px rgba(249,168,212,0.7), 0 0 60px rgba(192,132,252,0.6);
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 1.4s;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { filter: drop-shadow(0 0 30px rgba(249,168,212,0.7)) drop-shadow(0 0 60px rgba(192,132,252,0.5)); }
+    50% { filter: drop-shadow(0 0 45px rgba(249,168,212,0.95)) drop-shadow(0 0 90px rgba(192,132,252,0.75)); }
+  }
+
+  #phase2 {
+    position: fixed; inset: 0;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.4s ease;
+  }
+  #phase2.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #heart-wrap {
+    position: absolute;
+    top: 38%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(280px, 55vw);
+    height: min(260px, 50vw);
+    pointer-events: none;
+  }
+  #heart-wrap svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 0 20px rgba(249,168,212,0.9)) drop-shadow(0 0 50px rgba(192,132,252,0.6));
+    animation: heartBeat 2.2s ease-in-out infinite;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.08); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.05); }
+    56% { transform: scale(1); }
+  }
+
+  .wish {
+    position: absolute;
+    font-size: clamp(22px, 3vw, 28px); /* 2x */
+    font-weight: 600;
+    text-shadow:
+      0 0 4px rgba(255,255,255,0.8),
+      0 0 12px currentColor,
+      0 0 24px currentColor,
+      0 0 40px rgba(192,132,252,0.7),
+      0 0 60px rgba(249,168,212,0.45);
+    white-space: nowrap;
+    opacity: 0;
+    animation: wishFade 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes wishFade {
+    0%, 100% { opacity: 0; transform: translateY(6px) scale(0.95); }
+    15%, 70% { opacity: 0.9; transform: translateY(0) scale(1); }
+    85% { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 8px #fde68a, 0 0 16px #f9a8d4;
+    pointer-events: none;
+    animation: sparkleFloat 4s ease-in-out infinite;
+  }
+  @keyframes sparkleFloat {
+    0%, 100% { opacity: 0.2; transform: translateY(0) scale(0.6); }
+    50% { opacity: 1; transform: translateY(-18px) scale(1.2); }
+  }
+
+  .mini-heart {
+    position: absolute;
+    font-size: 14px;
+    pointer-events: none;
+    filter: drop-shadow(0 0 6px rgba(249,168,212,0.8));
+    animation: miniHeartUp 5s ease-in-out infinite;
+  }
+  @keyframes miniHeartUp {
+    0% { opacity: 0; transform: translateY(20px) scale(0.5); }
+    20% { opacity: 0.9; }
+    80% { opacity: 0.7; }
+    100% { opacity: 0; transform: translateY(-60px) scale(1.1); }
+  }
+
+  /* Khung lời chúc: viền gradient hồng – tím – đào – đỏ – vàng, chuyển động chậm */
+  #letter {
+    position: absolute;
+    left: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    transform: translateX(-50%);
+    width: min(560px, calc(100% - 28px));
+    border-radius: 20px;
+    z-index: 7;
+    isolation: isolate;
+    --frame: linear-gradient(120deg, #f472b6, #a855f7, #fdba74, #ef4444, #fde047, #f472b6, #a855f7, #fdba74);
+  }
+  #letter::before,
+  #letter::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--frame);
+    background-size: 300% 300%;
+    animation: frameFlow 8s linear infinite;
+    pointer-events: none;
+  }
+  #letter::before {           /* viền 2.5px */
+    padding: 2.5px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    z-index: 2;
+  }
+  #letter::after {            /* quầng sáng mờ phía sau */
+    z-index: -1;
+    filter: blur(18px);
+    opacity: 0.45;
+  }
+  @keyframes frameFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+  #letter .letter-inner {
+    position: relative;
+    z-index: 1;
+    max-height: min(44vh, 360px);
+    overflow-y: auto;
+    padding: 20px 22px 16px;
+    border-radius: inherit;
+    background:
+      linear-gradient(135deg, rgba(244,114,182,0.16), rgba(168,85,247,0.16) 30%, rgba(253,186,116,0.10) 55%, rgba(239,68,68,0.08) 75%, rgba(253,224,71,0.12)),
+      rgba(22, 10, 42, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+    font-size: clamp(13px, 2.6vw, 15px);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 6px rgba(249,168,212,0.35);
+    text-align: left;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(249,168,212,0.5) transparent;
+  }
+  #letter .letter-inner::-webkit-scrollbar { width: 4px; }
+  #letter .letter-inner::-webkit-scrollbar-thumb {
+    background: rgba(249,168,212,0.5);
+    border-radius: 4px;
+  }
+  #letter .greet-title {
+    font-family: var(--script);
+    font-size: 1.55em;
+    line-height: 1.3;
+    font-weight: 700;
+    color: var(--pink);
+    text-shadow: 0 0 4px rgba(255,255,255,0.6), 0 0 12px rgba(249,168,212,0.8), 0 0 24px rgba(192,132,252,0.55);
+    margin-bottom: 10px;
+  }
+  #letter .greet-body { margin-bottom: 10px; text-align: justify; }
+  #letter .greet-sign {
+    text-align: right;
+    color: var(--gold);
+    font-family: var(--script);
+    font-size: 1.35em;
+    line-height: 1.35;
+    text-shadow: 0 0 10px rgba(253,230,138,0.7), 0 0 22px rgba(249,168,212,0.45);
+    margin-top: 4px;
+  }
+  #letter .greet-sign strong {
+    display: block;
+    font-weight: 700;
+    font-size: 1.15em;
+    margin-top: 2px;
+    color: var(--lavender);
+    text-shadow: 0 0 6px rgba(255,255,255,0.6), 0 0 16px rgba(192,132,252,0.85), 0 0 30px rgba(249,168,212,0.5);
+  }
+
+  #hint {
+    position: fixed;
+    top: 12px; right: 14px;
+    z-index: 10;
+    font-size: 13px;
+    color: rgba(255,240,250,0.85);
+    text-shadow: 0 0 6px rgba(249,168,212,0.9), 0 0 16px rgba(192,132,252,0.7);
+    pointer-events: none;
+    transition: opacity 0.8s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bokeh-dot, #phase1 .big-date, #heart-wrap svg,
+    .wish, .sparkle, .mini-heart {
+      animation: none !important;
+      opacity: 0.7;
+    }
+    #letter::before, #letter::after { animation: none !important; }
+    #phase1 .line1, #phase1 .big-date, #phase1 .line3 {
+      opacity: 1;
+    }
+  }
+
+  /* ===== MOBILE (điện thoại, ≤ 768px) ===== */
+  @media (max-width: 768px) {
+    .falling-name { font-size: clamp(14px, 4.2vw, 17px); }
+    .wish { font-size: clamp(14px, 4.4vw, 18px); }
+    #ribbon { height: 90px; top: 6%; }
+    #phase1 .line1 { font-size: clamp(16px, 5vw, 22px); }
+    #phase1 .big-date { font-size: clamp(64px, 24vw, 120px); }
+    #phase1 .line3 { font-size: clamp(14px, 4.4vw, 20px); letter-spacing: 0.2em; }
+    #heart-wrap {
+      top: 30%;
+      width: min(220px, 52vw);
+      height: min(200px, 47vw);
+    }
+    #letter { width: calc(100% - 24px); bottom: max(12px, env(safe-area-inset-bottom, 12px)); border-radius: 16px; }
+    #letter .letter-inner {
+      max-height: 44vh;
+      padding: 14px 15px 12px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    #letter .greet-body { text-align: left; }
+    #hint { font-size: 11px; }
+  }
+  @media (max-width: 768px) and (max-height: 640px) {
+    #letter .letter-inner { max-height: 40vh; }
+    #heart-wrap { top: 26%; }
+  }
+</style>
+</head>
+<body>
+  <div id="sky" aria-hidden="true"></div>
+  <div id="bokeh" aria-hidden="true"></div>
+
+  <div id="ribbon" aria-hidden="true">
+    <svg viewBox="0 0 1200 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ribGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7c3aed" stop-opacity="0"/>
+          <stop offset="20%" stop-color="#a855f7" stop-opacity="0.7"/>
+          <stop offset="50%" stop-color="#c084fc" stop-opacity="0.85"/>
+          <stop offset="80%" stop-color="#e879f9" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="ribBlur"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <path d="M0,90 C150,20 300,120 450,55 C600,0 750,110 900,40 C1050,-10 1150,80 1200,50 L1200,110 C1100,130 1000,60 900,90 C750,140 600,50 450,105 C300,155 150,70 0,120 Z"
+            fill="url(#ribGrad)" filter="url(#ribBlur)" opacity="0.85"/>
+      <path d="M0,75 C180,30 320,95 480,45 C640,5 780,95 940,50 C1080,15 1160,70 1200,55"
+            fill="none" stroke="#f9a8d4" stroke-width="1.5" stroke-opacity="0.45"/>
+    </svg>
+  </div>
+
+  <canvas id="fw" aria-hidden="true"></canvas>
+  <div id="names" aria-hidden="true"></div>
+
+  <div id="phase1">
+    <div class="line1">Chúc mừng ngày</div>
+    <div class="big-date">20 . 10</div>
+    <div class="line3">PHỤ NỮ VIỆT NAM</div>
+  </div>
+
+  <div id="phase2">
+    <div id="heart-wrap">
+      <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f9a8d4"/>
+            <stop offset="50%" stop-color="#e879f9"/>
+            <stop offset="100%" stop-color="#fde68a"/>
+          </linearGradient>
+        </defs>
+        <path d="M50,82 C50,82 8,52 8,30 C8,16 18,8 30,8 C38,8 45,13 50,20 C55,13 62,8 70,8 C82,8 92,16 92,30 C92,52 50,82 50,82 Z"
+              fill="none" stroke="url(#heartGrad)" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M50,75 C50,75 16,50 16,32 C16,21 24,14 33,14 C39,14 45,18 50,25 C55,18 61,14 67,14 C76,14 84,21 84,32 C84,50 50,75 50,75 Z"
+              fill="url(#heartGrad)" fill-opacity="0.15"/>
+      </svg>
+    </div>
+    <div id="wishes"></div>
+    <div id="sparkles"></div>
+    <div id="mini-hearts"></div>
+
+    <!-- ===== LỜI CHÚC — sửa nội dung tại đây ===== -->
+    <div id="letter">
+      <div class="letter-inner">
+        <div class="greet-title">Thân gửi các chị, các bạn và các em gái thành viên Câu lạc bộ Cộng tác viên!</div>
+        <div class="greet-body">
+          Nhân ngày 20/10, Nghĩa muốn gửi lời chúc chân thành đến mọi người, mong cho mỗi “bóng hồng” đều được sống một cuộc sống thật nhẹ nhàng, luôn giữ được nụ cười và sự ấm áp trong trái tim. Chúc các chị, các bạn và các em luôn xinh đẹp theo cách của riêng mình, thật khỏe mạnh, học tập và công việc thuận lợi, mỗi ngày đều có thêm những niềm vui. Cảm ơn vì những đóng góp thầm lặng và chân thành cho CLB, nhờ các bạn mà không gian của chúng ta luôn đầy năng lượng và gắn kết. Mong rằng ngọn lửa yêu thích hoạt động CLB sẽ luôn cháy sáng trong mỗi người. Chúc một ngày 20/10 thật đáng nhớ!
+        </div>
+        <div class="greet-sign">
+          Thân mến,<br/>
+          <strong>Nghĩa ngu ngơ.</strong>
+        </div>
+      </div>
+    </div>
+    <!-- ===== HẾT LỜI CHÚC ===== -->
+  </div>
+
+  <div id="hint">Chạm / click để bắn pháo hoa ✨</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+   * DANH SÁCH TÊN — hãy thay các mục dưới bằng tên thật của các bạn nữ.
+   * Thêm / bớt bao nhiêu tên cũng được.
+   * ============================================================ */
+  const NAMES = [
+    'Tên 1',
+    'Tên 2',
+    'Tên 3',
+    'Tên 4',
+    'Tên 5',
+    'Tên 6',
+    'Tên 7',
+    'Tên 8',
+    'Tên 9',
+    'Tên 10',
+  ];
+  /* ============================================================ */
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PHASE1_MS = reduceMotion ? 2500 : 9000;
+  const IS_MOBILE = window.matchMedia('(max-width: 768px)').matches ||
+    (window.matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 768);
+  document.documentElement.classList.add(IS_MOBILE ? 'is-mobile' : 'is-desktop');
+
+  /* ---------- Bokeh ---------- */
+  (function makeBokeh() {
+    const layer = document.getElementById('bokeh');
+    const colors = [
+      'rgba(249,168,212,0.55)',
+      'rgba(192,132,252,0.5)',
+      'rgba(253,230,138,0.45)',
+      'rgba(232,121,249,0.45)',
+      'rgba(167,139,250,0.4)',
+    ];
+    const n = reduceMotion ? 8 : (IS_MOBILE ? 10 : 18);
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('div');
+      d.className = 'bokeh-dot';
+      const size = 40 + Math.random() * 90;
+      d.style.width = size + 'px';
+      d.style.height = size + 'px';
+      d.style.left = Math.random() * 100 + '%';
+      d.style.top = Math.random() * 100 + '%';
+      d.style.background = `radial-gradient(circle, ${colors[i % colors.length]} 0%, transparent 70%)`;
+      d.style.setProperty('--dur', (3.5 + Math.random() * 3.5) + 's');
+      d.style.setProperty('--delay', (Math.random() * 3) + 's');
+      layer.appendChild(d);
+    }
+  })();
+
+  /* ---------- Phase switch ---------- */
+  setTimeout(function () {
+    document.getElementById('phase1').classList.add('hide');
+    document.getElementById('phase2').classList.add('show');
+    const hint = document.getElementById('hint');
+    setTimeout(function () { hint.style.opacity = '0'; }, 5000);
+  }, PHASE1_MS);
+
+  /* ---------- Wishes / sparkles / mini hearts ---------- */
+  (function decoratePhase2() {
+    const wishes = [
+      'Luôn xinh đẹp',
+      'Bình yên nhẹ nhàng',
+      'Gặp nhiều may mắn',
+      'Vui vẻ hạnh phúc',
+      'Năng lượng tích cực',
+      'Thật rạng rỡ',
+      'Luôn tự tin',
+      'Tràn đầy yêu thương',
+    ];
+    const colors = ['#f9a8d4', '#fde68a', '#ddd6fe', '#e879f9', '#c084fc', '#fda4af'];
+    const wrap = document.getElementById('wishes');
+    const positions = IS_MOBILE ? [
+      [4, 10.5], [96, 14.5], [4, 18.5], [96, 22.5],
+      [4, 38.5], [96, 42.5], [4, 46.5], [96, 50.5],
+    ] : [
+      [6, 16], [80, 14], [4, 40], [84, 38],
+      [3, 64], [86, 62], [18, 27], [70, 27],
+    ];
+    wishes.forEach(function (w, i) {
+      const el = document.createElement('div');
+      el.className = 'wish';
+      el.textContent = w;
+      if (IS_MOBILE && positions[i][0] > 50) el.style.right = '4%';
+      else if (positions[i][0] > 50) el.style.right = (100 - positions[i][0] - 14 < 3 ? 3 : 100 - positions[i][0] - 14) + '%';
+      else el.style.left = positions[i][0] + '%';
+      el.style.top = positions[i][1] + '%';
+      el.style.color = colors[i % colors.length];
+      el.style.animationDelay = (i * 0.7) + 's';
+      wrap.appendChild(el);
+    });
+
+    const sparkWrap = document.getElementById('sparkles');
+    for (let i = 0; i < (IS_MOBILE ? 7 : 12); i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.left = (10 + Math.random() * 80) + '%';
+      s.style.top = (15 + Math.random() * 55) + '%';
+      s.style.animationDelay = (Math.random() * 4) + 's';
+      s.style.animationDuration = (3 + Math.random() * 3) + 's';
+      sparkWrap.appendChild(s);
+    }
+
+    const mh = document.getElementById('mini-hearts');
+    for (let i = 0; i < (IS_MOBILE ? 4 : 6); i++) {
+      const h = document.createElement('div');
+      h.className = 'mini-heart';
+      h.textContent = '♥';
+      h.style.left = (20 + Math.random() * 60) + '%';
+      h.style.top = (35 + Math.random() * 30) + '%';
+      h.style.color = colors[i % colors.length];
+      h.style.animationDelay = (Math.random() * 4) + 's';
+      h.style.fontSize = (10 + Math.random() * 10) + 'px';
+      mh.appendChild(h);
+    }
+  })();
+
+  /* ---------- Falling names with see-saw / pendulum ---------- */
+  (function fallingNames() {
+    const layer = document.getElementById('names');
+    const palette = ['#f9a8d4', '#fde68a', '#c4b5fd', '#fda4af', '#e9d5ff', '#fcd34d'];
+    const active = [];
+    const MAX_ACTIVE = IS_MOBILE ? Math.min(8, Math.max(5, NAMES.length)) : Math.min(14, Math.max(6, NAMES.length));
+    let nextIdx = 0;
+
+    function spawn() {
+      if (!NAMES.length) return;
+      if (active.length >= MAX_ACTIVE) return;
+
+      const name = NAMES[nextIdx % NAMES.length];
+      nextIdx++;
+
+      const el = document.createElement('div');
+      el.className = 'falling-name';
+      el.textContent = name;
+      const color = palette[Math.floor(Math.random() * palette.length)];
+      el.style.color = color;
+
+      const x = 5 + Math.random() * 85; // %
+      const speed = 28 + Math.random() * 42; // px/s
+      // Unique phase & period so they don't sync
+      const swayAmp = IS_MOBILE ? 10 + Math.random() * 16 : 18 + Math.random() * 28; // px left-right
+      const swayPeriod = 2.2 + Math.random() * 2.8; // seconds
+      const swayPhase = Math.random() * Math.PI * 2;
+      const rotAmp = 15 + Math.random() * 6; // ±15–21 deg
+      const rotPeriod = 1.8 + Math.random() * 2.2;
+      const rotPhase = Math.random() * Math.PI * 2;
+      const startY = -50 - Math.random() * 80;
+
+      const item = {
+        el, x, y: startY, speed,
+        swayAmp, swayPeriod, swayPhase,
+        rotAmp, rotPeriod, rotPhase,
+        born: performance.now(),
+      };
+      layer.appendChild(el);
+      active.push(item);
+    }
+
+    // Stagger initial spawns
+    let spawned = 0;
+    const initialTimer = setInterval(function () {
+      spawn();
+      spawned++;
+      if (spawned >= Math.min(MAX_ACTIVE, NAMES.length || 1)) clearInterval(initialTimer);
+    }, reduceMotion ? 600 : 450);
+
+    // Keep spawning as ones leave
+    setInterval(spawn, reduceMotion ? 1800 : 1100);
+
+    let last = performance.now();
+    function tick(now) {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const H = window.innerHeight;
+
+      for (let i = active.length - 1; i >= 0; i--) {
+        const it = active[i];
+        it.y += it.speed * dt;
+        const t = (now - it.born) / 1000;
+        // Sinusoidal sway (left-right) + see-saw rotation (pendulum)
+        const sway = Math.sin(t * (Math.PI * 2 / it.swayPeriod) + it.swayPhase) * it.swayAmp;
+        const rot = Math.sin(t * (Math.PI * 2 / it.rotPeriod) + it.rotPhase) * it.rotAmp;
+
+        if (!it.w) it.w = it.el.offsetWidth;
+        const maxL = Math.max(0, window.innerWidth - it.w - 8);
+        const leftPx = Math.min(maxL, Math.max(8, (it.x / 100) * maxL + sway));
+        it.el.style.transform =
+          'translate3d(' + leftPx + 'px,' + it.y + 'px,0) rotate(' + rot + 'deg)';
+
+        if (it.y > H + 80) {
+          it.el.remove();
+          active.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    // Set initial left via transform so we don't fight CSS left
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------- Fireworks canvas ---------- */
+  (function fireworks() {
+    const canvas = document.getElementById('fw');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let W = 0, H = 0, dpr = 1;
+    const rockets = [];
+    const particles = [];
+    const MAX_PARTICLES = IS_MOBILE ? 650 : 1500;
+
+    const SHAPES = ['circle', 'heart', 'star', 'ring', 'peony', 'willow', 'spiral', 'flower', '2010'];
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = Math.floor(W * dpr);
+      canvas.height = Math.floor(H * dpr);
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function hsl(h, s, l, a) {
+      return 'hsla(' + h + ',' + s + '%,' + l + '%,' + (a == null ? 1 : a) + ')';
+    }
+
+    function pickColor() {
+      const hues = [320, 280, 300, 45, 350, 265, 15];
+      return hues[Math.floor(Math.random() * hues.length)];
+    }
+
+    function shapePoints(shape, n, r) {
+      const pts = [];
+      if (shape === 'circle') {
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2;
+          const rr = r * (0.7 + Math.random() * 0.5);
+          pts.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr });
+        }
+      } else if (shape === 'heart') {
+        for (let i = 0; i < n; i++) {
+          const t = (i / n) * Math.PI * 2;
+          const hx = 16 * Math.pow(Math.sin(t), 3);
+          const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+          const s = r / 18;
+          pts.push({ x: hx * s, y: hy * s });
+        }
+      } else if (shape === 'star') {
+        const spikes = 5;
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+          const spike = Math.floor((i / n) * spikes * 2) % 2 === 0;
+          const rr = spike ? r : r * 0.4;
+          const jitter = 0.85 + Math.random() * 0.3;
+          pts.push({ x: Math.cos(a) * rr * jitter, y: Math.sin(a) * rr * jitter });
+        }
+      } else if (shape === 'ring') {
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2;
+          const rr = r * (0.9 + Math.random() * 0.15);
+          pts.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr });
+        }
+      } else if (shape === 'peony') {
+        // double ring with slight color change later
+        const half = Math.floor(n / 2);
+        for (let i = 0; i < half; i++) {
+          const a = (i / half) * Math.PI * 2;
+          pts.push({ x: Math.cos(a) * r * 0.55, y: Math.sin(a) * r * 0.55, ring: 0 });
+        }
+        for (let i = 0; i < n - half; i++) {
+          const a = (i / (n - half)) * Math.PI * 2;
+          pts.push({ x: Math.cos(a) * r * 1.05, y: Math.sin(a) * r * 1.05, ring: 1 });
+        }
+      } else if (shape === 'willow') {
+        for (let i = 0; i < n; i++) {
+          const a = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4;
+          const rr = r * (0.5 + Math.random() * 0.8);
+          pts.push({ x: Math.cos(a) * rr * 0.35, y: Math.sin(a) * rr, willow: true });
+        }
+      } else if (shape === 'spiral') {
+        for (let i = 0; i < n; i++) {
+          const t = i / n;
+          const a = t * Math.PI * 6;
+          const rr = r * t;
+          pts.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr, spiral: true, t });
+        }
+      } else if (shape === 'flower') {
+        const petals = 6;
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2;
+          const rr = r * (0.45 + 0.55 * Math.abs(Math.cos(a * petals / 2)));
+          pts.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr });
+        }
+      } else if (shape === '2010') {
+        // Digits "20/10" as point cloud sampled from simple stroke paths
+        const glyphs = digitPaths();
+        for (let i = 0; i < n; i++) {
+          const g = glyphs[i % glyphs.length];
+          const p = g[Math.floor(Math.random() * g.length)];
+          pts.push({ x: p.x * r * 0.08, y: p.y * r * 0.08 });
+        }
+      } else {
+        for (let i = 0; i < n; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const rr = r * Math.random();
+          pts.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr });
+        }
+      }
+      return pts;
+    }
+
+    function digitPaths() {
+      // Relative unit coords for "2 0 / 1 0"
+      function line(x0, y0, x1, y1, steps) {
+        const arr = [];
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          arr.push({ x: x0 + (x1 - x0) * t, y: y0 + (y1 - y0) * t });
+        }
+        return arr;
+      }
+      function arc(cx, cy, rad, a0, a1, steps) {
+        const arr = [];
+        for (let i = 0; i <= steps; i++) {
+          const t = a0 + (a1 - a0) * (i / steps);
+          arr.push({ x: cx + Math.cos(t) * rad, y: cy + Math.sin(t) * rad });
+        }
+        return arr;
+      }
+      // Digits centered around 0, spaced horizontally
+      const two = []
+        .concat(arc(-14, -4, 4, Math.PI, 0, 10))
+        .concat(line(-10, -4, -18, 8, 8))
+        .concat(line(-18, 8, -10, 8, 6));
+      const zero1 = arc(-4, 2, 5.5, 0, Math.PI * 2, 20);
+      const slash = line(4, -6, 8, 10, 10);
+      const one = line(12, -6, 12, 10, 12).concat(line(10, -6, 12, -6, 4));
+      const zero2 = arc(20, 2, 5.5, 0, Math.PI * 2, 20);
+      // Recenter
+      const all = [two, zero1, slash, one, zero2];
+      const flat = all.reduce(function (a, b) { return a.concat(b); }, []);
+      let cx = 0, cy = 0;
+      flat.forEach(function (p) { cx += p.x; cy += p.y; });
+      cx /= flat.length; cy /= flat.length;
+      return all.map(function (g) {
+        return g.map(function (p) { return { x: p.x - cx, y: p.y - cy }; });
+      });
+    }
+
+    function explode(x, y, shape) {
+      shape = shape || SHAPES[Math.floor(Math.random() * SHAPES.length)];
+      const hue = pickColor();
+      const nScale = IS_MOBILE ? 0.6 : 1;
+      const n0 = shape === 'willow' ? 55 : shape === '2010' ? 90 : shape === 'peony' ? 70 : 50 + Math.floor(Math.random() * 30);
+      const n = Math.round(n0 * nScale);
+      const r = IS_MOBILE ? 55 + Math.random() * 45 : 90 + Math.random() * 70;
+      const pts = shapePoints(shape, n, r);
+      const room = MAX_PARTICLES - particles.length;
+      const count = Math.min(pts.length, Math.max(0, room));
+
+      for (let i = 0; i < count; i++) {
+        const p = pts[i];
+        const speed = 0.015 + Math.random() * 0.01;
+        let vx = p.x * speed;
+        let vy = p.y * speed;
+        let gravity = 0.028 + Math.random() * 0.02;
+        let life = 55 + Math.random() * 45;
+        let h = hue + (Math.random() - 0.5) * 30;
+        let decay = 0.012 + Math.random() * 0.01;
+
+        if (p.willow) {
+          gravity = 0.055 + Math.random() * 0.03;
+          life = 80 + Math.random() * 50;
+          h = 40 + Math.random() * 20; // gold
+          decay = 0.008;
+        }
+        if (p.spiral) {
+          // tangential boost
+          const ang = Math.atan2(p.y, p.x) + Math.PI / 2;
+          vx += Math.cos(ang) * 1.2;
+          vy += Math.sin(ang) * 1.2;
+        }
+        if (shape === 'peony' && p.ring === 1) {
+          h = (hue + 40) % 360;
+          life += 15;
+        }
+        if (shape === 'ring') {
+          const len = Math.sqrt(vx * vx + vy * vy) || 1;
+          const target = 2.2 + Math.random() * 0.6;
+          vx = (vx / len) * target;
+          vy = (vy / len) * target;
+          gravity = 0.015;
+        }
+
+        particles.push({
+          x, y, vx, vy,
+          life, maxLife: life,
+          gravity, decay,
+          hue: h,
+          size: (shape === 'willow' ? 1.2 : 1.6) + Math.random() * 1.4,
+          trail: shape === 'willow' || shape === 'spiral',
+          peonyShift: shape === 'peony',
+          alpha: 1,
+        });
+      }
+    }
+
+    function launchRocket(targetX, targetY, shape) {
+      const startX = W * (0.2 + Math.random() * 0.6);
+      const startY = H + 10;
+      const tx = targetX != null ? targetX : W * (0.2 + Math.random() * 0.6);
+      const ty = targetY != null ? targetY : H * (0.18 + Math.random() * 0.35);
+      rockets.push({
+        x: startX, y: startY,
+        tx, ty,
+        vx: (tx - startX) / 45,
+        vy: (ty - startY) / 45,
+        hue: pickColor(),
+        shape: shape || SHAPES[Math.floor(Math.random() * SHAPES.length)],
+        trail: [],
+      });
+    }
+
+    // Auto launch
+    function autoLaunch() {
+      if (reduceMotion) return;
+      if (particles.length > MAX_PARTICLES * 0.85) return;
+      launchRocket();
+    }
+    setInterval(autoLaunch, 2200);
+    setTimeout(autoLaunch, 1200);
+    setTimeout(autoLaunch, 2800);
+
+    // Click / tap
+    function onPointer(e) {
+      const tg = e.target;
+      if (tg && tg.closest && tg.closest('#letter')) return; // cho phép cuộn lời chúc
+      e.preventDefault();
+      const x = e.clientX != null ? e.clientX : (e.touches && e.touches[0].clientX);
+      const y = e.clientY != null ? e.clientY : (e.touches && e.touches[0].clientY);
+      if (x == null) return;
+      // Don't block letter scrolling — only launch if not interacting with letter
+      const t = e.target;
+      if (t && (t.id === 'letter' || (t.closest && t.closest('#letter')))) return;
+      launchRocket(x, y);
+    }
+    window.addEventListener('click', onPointer);
+    window.addEventListener('touchstart', onPointer, { passive: false });
+
+    function loop() {
+      // Trails via semi-transparent clear
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+
+      // Rockets
+      for (let i = rockets.length - 1; i >= 0; i--) {
+        const r = rockets[i];
+        r.x += r.vx;
+        r.y += r.vy;
+        r.trail.push({ x: r.x, y: r.y });
+        if (r.trail.length > 8) r.trail.shift();
+
+        for (let t = 0; t < r.trail.length; t++) {
+          const p = r.trail[t];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = hsl(r.hue, 90, 70, t / r.trail.length);
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = hsl(r.hue, 100, 80, 1);
+        ctx.fill();
+
+        // arrived?
+        if (Math.abs(r.y - r.ty) < 8 || r.y <= r.ty) {
+          explode(r.x, r.y, r.shape);
+          rockets.splice(i, 1);
+        }
+      }
+
+      // Particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.vy += p.gravity;
+        p.vx *= 0.99;
+        p.vy *= 0.995;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        p.alpha = Math.max(0, p.life / p.maxLife);
+
+        let h = p.hue;
+        if (p.peonyShift) {
+          h = (p.hue + (1 - p.alpha) * 50) % 360;
+        }
+
+        const a = p.alpha;
+        if (a <= 0.02 || p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * (0.5 + a * 0.5), 0, Math.PI * 2);
+        ctx.fillStyle = hsl(h, 95, 65, a);
+        ctx.fill();
+
+        if (p.trail) {
+          ctx.beginPath();
+          ctx.arc(p.x - p.vx * 2, p.y - p.vy * 2, p.size * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = hsl(h, 90, 60, a * 0.4);
+          ctx.fill();
+        }
+      }
+
+      // Cap hard
+      if (particles.length > MAX_PARTICLES) {
+        particles.splice(0, particles.length - MAX_PARTICLES);
+      }
+
+      requestAnimationFrame(loop);
+    }
+    // Initial clear to transparent-ish dark
+    requestAnimationFrame(loop);
+
+    // Expose shapes list for verification
+    window.__FW_SHAPES__ = SHAPES.slice();
+  })();
+})();
+</script>
+</body>
+</html>
