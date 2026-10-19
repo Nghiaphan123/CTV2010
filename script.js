@@ -65,8 +65,8 @@
   /* ============================================================ */
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const FOG_MS = 5000;                                   // sương phủ đúng 5s
-  const PHASE1_MS = FOG_MS + (reduceMotion ? 2500 : 6000); // tiêu đề ở giữa 6s rồi mới thu lên
+  const FOG_MS = 7000;                                   // sương phủ đúng 7s
+  const PHASE1_MS = FOG_MS + (reduceMotion ? 2500 : 8000); // tiêu đề ở giữa 8s rồi mới thu lên
   const IS_MOBILE = window.matchMedia('(max-width: 768px)').matches ||
     (window.matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 768);
   document.documentElement.classList.add(IS_MOBILE ? 'is-mobile' : 'is-desktop');
