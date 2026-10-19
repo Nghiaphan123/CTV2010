@@ -501,9 +501,8 @@
     const active = [];
     const MAX_ACTIVE = IS_MOBILE ? 15 : 22;            // giới hạn an toàn (không chặn nhịp 500ms)
     const INTERVAL = reduceMotion ? 2000 : (IS_MOBILE ? 900 : 500);  // ~17 tên (laptop) / ~12 (mobile) cùng lúc
-    // 2 làn: trái (4–28% bề ngang) và phải (72–96%), xen kẽ trái/phải → chừa trống giữa (tiêu đề, tim, phong thư)
-    const LANES = [{ a: 0.04, b: 0.28, last: null }, { a: 0.72, b: 0.96, last: null }];
-    let laneTurn = 0;
+    // Rải khắp bề ngang: thử nhiều vị trí, chọn chỗ xa các tên vừa rơi nhất
+    const recent = [];
     // Lần lượt theo đúng thứ tự danh sách: 0, 1, 2, … rồi quay lại đầu
     let nextIdx = 0;
     function nextName() {
@@ -527,15 +526,9 @@
       const color = palette[Math.floor(Math.random() * palette.length)];
       el.style.color = color;
 
-      const laneIdx = laneTurn; laneTurn = 1 - laneTurn;
-      const lane = LANES[laneIdx];
-      const x = Math.random();                       // vị trí ngẫu nhiên trong làn (0..1)
       const vMin = IS_MOBILE ? 80 : 95, vMax = IS_MOBILE ? 100 : 120;
-      let speed = vMin + Math.random() * (vMax - vMin); // px/s
-      // không đuổi kịp tên trước cùng làn: tốc độ chỉ lệch ±3% so với tên trước
-      const prev = lane.last;
-      if (prev && prev.el.isConnected) speed = Math.min(vMax, Math.max(vMin, prev.speed * (0.97 + Math.random() * 0.06)));
-      const swayAmp = IS_MOBILE ? 6 + Math.random() * 8 : 10 + Math.random() * 14; // px, nhỏ để ở trong làn
+      const speed = vMin + Math.random() * (vMax - vMin); // px/s
+      const swayAmp = IS_MOBILE ? 6 + Math.random() * 8 : 10 + Math.random() * 14; // px
       const swayPeriod = 2.2 + Math.random() * 2.8; // seconds
       const swayPhase = Math.random() * Math.PI * 2;
       const rotAmp = 15 + Math.random() * 6; // ±15–21 deg
@@ -543,15 +536,29 @@
       const rotPhase = Math.random() * Math.PI * 2;
       const startY = -60;
 
+      layer.appendChild(el);
+      const w = el.offsetWidth, VW = window.innerWidth;
+      const lo = 8 + swayAmp, hi = Math.max(lo, VW - w - 8 - swayAmp);
+      let x = lo + Math.random() * (hi - lo), best = -Infinity;
+      for (let k = 0; k < 10; k++) {                  // chọn vị trí cách xa các tên gần nhất
+        const cx = lo + Math.random() * (hi - lo);
+        let gap = Infinity;
+        recent.forEach(function (r) {
+          if (!r.el.isConnected) return;
+          const g = Math.max(r.x - (cx + w), cx - (r.x + r.w)); // khoảng hở ngang (âm = chồng)
+          const dy = Math.max(0, r.y - startY);                 // tên càng xa phía dưới càng ít ảnh hưởng
+          gap = Math.min(gap, g + dy * 0.6);
+        });
+        if (gap > best) { best = gap; x = cx; }
+      }
       const item = {
-        el, x, lane, y: startY, speed,
+        el, x, w, y: startY, speed,
         swayAmp, swayPeriod, swayPhase,
         rotAmp, rotPeriod, rotPhase,
         born: performance.now(),
       };
-      layer.appendChild(el);
       active.push(item);
-      lane.last = item;
+      recent.push(item); if (recent.length > (IS_MOBILE ? 4 : 6)) recent.shift();
     }
 
     spawn();                                       // tên đầu tiên rơi ngay
@@ -571,16 +578,8 @@
         const sway = Math.sin(t * (Math.PI * 2 / it.swayPeriod) + it.swayPhase) * it.swayAmp;
         const rot = Math.sin(t * (Math.PI * 2 / it.rotPeriod) + it.rotPhase) * it.rotAmp;
 
-        if (!it.w) it.w = it.el.offsetWidth;
         const VW = window.innerWidth;
-        let baseL;
-        if (it.lane === LANES[0]) {                   // làn trái: mép trái trong 4%..(28% - bề rộng)
-          const lo = VW * it.lane.a, hi = Math.max(lo, VW * it.lane.b - it.w);
-          baseL = lo + (hi - lo) * it.x;
-        } else {                                      // làn phải: mép phải trong (72% + bề rộng)..96%
-          const hiR = VW * it.lane.b, loR = Math.min(hiR, VW * it.lane.a + it.w);
-          baseL = loR + (hiR - loR) * it.x - it.w;
-        }
+        const baseL = it.x;
         const maxL = Math.max(0, VW - it.w - 8);
         const leftPx = Math.min(maxL, Math.max(8, baseL + sway));
         it.el.style.transform =
