@@ -350,7 +350,7 @@
       busy = true;
       env.classList.add('opening', 'flap-open');
       after(520, function () { env.classList.add('paper-out'); });
-      after(1050, function () { letter.classList.add('open'); env.classList.add('gone'); });
+      after(1050, function () { letter.classList.add('open'); env.classList.add('gone'); document.body.classList.add('letter-open'); });
       after(1600, function () { busy = false; });
     });
     // ĐÓNG: khung thư thu lại → giấy trượt xuống → nắp đóng → tim đập lại
@@ -359,6 +359,7 @@
       if (busy) return;
       busy = true;
       letter.classList.remove('open');
+      document.body.classList.remove('letter-open');
       env.classList.remove('gone');
       after(480, function () { env.classList.remove('paper-out'); });
       after(1000, function () { env.classList.remove('flap-open'); });

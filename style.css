@@ -609,7 +609,7 @@ body.fogging #phase1 .title-block > * { animation-play-state: paused; }
   border-radius: inherit;
   background:
     linear-gradient(135deg, rgba(244,114,182,0.16), rgba(168,85,247,0.16) 30%, rgba(253,186,116,0.10) 55%, rgba(239,68,68,0.08) 75%, rgba(253,224,71,0.12)),
-    rgba(24, 10, 40, 0.86);
+    rgba(24, 10, 40, 0.97);
   /* tối ưu: bỏ backdrop-filter (pháo hoa phía sau làm blur tính lại mỗi khung) */
   box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
   font-size: clamp(16px, 1.6vw, 20px);   /* ~1.35x */
@@ -760,7 +760,7 @@ html.tab-hidden #bouquet *, html.fx-low2 #bouquet .bq-sp path { animation-play-s
   position: fixed;
   left: max(10px, env(safe-area-inset-left, 10px));
   top: max(10px, env(safe-area-inset-top, 10px));
-  z-index: 30;
+  z-index: 60;
   width: 40px; height: 40px;
   border-radius: 50%;
   border: 1.5px solid rgba(255,255,255,0.55);
@@ -774,3 +774,15 @@ html.tab-hidden #bouquet *, html.fx-low2 #bouquet .bq-sp path { animation-play-s
   touch-action: manipulation;
 }
 #music-toggle:hover, #music-toggle:focus-visible { opacity: 1; }
+
+/* ===== Thư mở: thư nằm trên cùng, nền phía sau mờ đi ===== */
+body.letter-open #phase2 { z-index: 40; }
+#phase1, #names, #stage-light, #fw { transition: opacity .5s ease; }
+body.letter-open #phase1 { opacity: 0.12; }
+body.letter-open #names, body.letter-open #stage-light { opacity: 0.25; }
+body.letter-open #fw { opacity: 0.5; }
+body.letter-open #heart-wrap, body.letter-open #wishes { opacity: 0.15; transition: opacity .5s ease; }
+#letter #bouquet { z-index: -2; }   /* bó hoa nằm sau/cạnh thư, không đè chữ */
+@media (max-width: 768px) {
+  #letter #bouquet { display: none; }  /* mobile không đủ chỗ: ẩn bó hoa */
+}
