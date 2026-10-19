@@ -95,7 +95,12 @@
   /* ---------- Nhạc nền ---------- */
   (function music() {
     const audio = new Audio('assets/music.mp3');
-    audio.loop = true; audio.preload = 'auto'; audio.volume = 0;
+    audio.loop = false; audio.preload = 'auto'; audio.volume = 0;
+    const SKIP = 3;                                   // bỏ 3 giây đầu bài
+    let skipped = false;
+    function seekSkip() { try { audio.currentTime = SKIP; skipped = true; } catch (e) {} }
+    if (audio.readyState >= 1) seekSkip(); else audio.addEventListener('loadedmetadata', function () { if (!skipped) seekSkip(); }, { once: true });
+    audio.addEventListener('ended', function () { audio.currentTime = SKIP; audio.play().catch(function () {}); }); // lặp lại từ giây thứ 3
     const btn = document.getElementById('music-toggle');
     const TARGET = 0.5;
     let muted = false, started = false, fadeT = null;
@@ -111,6 +116,7 @@
     }
     function play() {
       if (muted || document.hidden) return;
+      if (!skipped || audio.currentTime < SKIP) seekSkip();
       const pr = audio.play();
       if (pr && pr.then) pr.then(function () { started = true; fadeTo(TARGET, 2500); }).catch(function () {});
     }
