@@ -95,7 +95,7 @@
   /* ---------- Nhạc nền ---------- */
   (function music() {
     const audio = new Audio('assets/music.mp3');
-    audio.loop = false; audio.preload = 'auto'; audio.volume = 0;
+    audio.loop = false; audio.preload = 'auto'; audio.autoplay = true; audio.volume = 0;
     const SKIP = 3;                                   // bỏ 3 giây đầu bài
     let skipped = false;
     function seekSkip() { try { audio.currentTime = SKIP; skipped = true; } catch (e) {} }
@@ -118,27 +118,45 @@
       if (muted || document.hidden) return;
       if (!skipped || audio.currentTime < SKIP) seekSkip();
       const pr = audio.play();
-      if (pr && pr.then) pr.then(function () { started = true; fadeTo(TARGET, 2500); }).catch(function () {});
+      if (pr && pr.catch) pr.catch(function () { armGestures(); });   // bị chặn autoplay → chờ thao tác đầu tiên
     }
-    function ui() { btn.textContent = muted ? '🔇' : '🔊'; btn.setAttribute('aria-pressed', muted ? 'true' : 'false'); btn.setAttribute('aria-label', muted ? 'Bật nhạc' : 'Tắt nhạc'); }
-    const EVS = ['pointerdown', 'touchstart', 'keydown', 'click'];
+    audio.addEventListener('playing', function () {
+      started = true; disarmGestures(); ui();
+      if (!muted && audio.volume < TARGET) fadeTo(TARGET, 2500);
+    });
+    audio.addEventListener('pause', ui);
+    function ui() {
+      const on = !muted && !audio.paused;
+      btn.textContent = on ? '🔊' : '🔇';
+      btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+      btn.setAttribute('aria-label', on ? 'Tắt nhạc' : 'Bật nhạc');
+    }
+    const EVS = ['pointerdown', 'touchstart', 'keydown', 'click', 'wheel'];
+    let armed = false;
     function firstGesture(e) {
       if (e && e.target && e.target.closest && e.target.closest('#music-toggle')) return;
-      EVS.forEach(function (ev) { window.removeEventListener(ev, firstGesture, true); });
-      if (!started) play();
+      if (!started && audio.paused) play();
     }
-    EVS.forEach(function (ev) { window.addEventListener(ev, firstGesture, { capture: true, passive: true }); });
+    function armGestures() {
+      if (armed || started) return; armed = true;
+      EVS.forEach(function (ev) { window.addEventListener(ev, firstGesture, { capture: true, passive: true }); });
+    }
+    function disarmGestures() {
+      if (!armed) return; armed = false;
+      EVS.forEach(function (ev) { window.removeEventListener(ev, firstGesture, true); });
+    }
+    armGestures();
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      muted = !muted; ui();
-      if (muted) fadeTo(0, 400, function () { audio.pause(); });
-      else { audio.volume = 0; play(); }
+      if (!muted && !audio.paused) { muted = true; ui(); fadeTo(0, 400, function () { audio.pause(); }); }
+      else { muted = false; audio.volume = 0; play(); ui(); }
     });
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) { clearInterval(fadeT); audio.pause(); }
       else if (started && !muted) { audio.volume = 0; play(); }
     });
     ui();
+    play();                                           // thử phát ngay khi tải trang
   })();
 
   /* ---------- Bokeh ---------- */
